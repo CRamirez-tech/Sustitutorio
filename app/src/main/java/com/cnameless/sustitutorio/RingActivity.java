@@ -15,9 +15,5 @@ public class RingActivity extends AppCompatActivity {
 
         RingChart ringChart = findViewById(R.id.ringChart);
 
-        //leyendChart.setLeyendData(ringChart.getLeyend());
-
     }
-
-
 }

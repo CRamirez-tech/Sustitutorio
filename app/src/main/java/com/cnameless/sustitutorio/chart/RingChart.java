@@ -4,15 +4,15 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
-public class RingChart extends View {
+public class RingChart extends View implements View.OnTouchListener {
     private static final String TAG = "RingChart";
     private float WIDTH;
     private float HEIGHT;
@@ -20,12 +20,13 @@ public class RingChart extends View {
     private RectF arcRectangle;
     private Paint circlePaint;
     private Paint labelPaint;
-
     private Paint recHora;
     private Paint recMinuto;
+
     public RingChart(Context context) {
         super(context);
         init();
+        this.setOnTouchListener(this);
     }
 
     public RingChart(Context context, @Nullable AttributeSet attrs) {
@@ -92,7 +93,6 @@ public class RingChart extends View {
         float y = HEIGHT / 2;
         float r = (Math.min(arcRectangle.height(), arcRectangle.width()) / 2f) * 0.85f;
         canvas.drawRect(x-10f, y-r,x+10f,y, recHora);
-
     }
     private void drawMinuto(Canvas canvas) {
         float x = WIDTH / 2;
@@ -101,18 +101,17 @@ public class RingChart extends View {
         canvas.drawRect(x-10f, y-r,x+10f,y, recMinuto);
     }
     @Override
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        super.setOnClickListener(l);
-        invalidate();
-    }
-
-    @Override
     protected void onDraw(Canvas canvas) {
         drawSections(canvas);
         drawInnerCircle(canvas);
         drawMinuto(canvas);
         drawHora(canvas);
+        invalidate();
     }
 
-
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        Log.d("TAG","Clicked");
+        return true;
+    }
 }
